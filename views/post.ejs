@@ -1,0 +1,16 @@
+<%- include header %>
+    <form class="form-horizontal" role="form" method="post">
+    	<h2 class="form-signin-heading">发布话题</h2>
+    	<label for="title" class="col-sm-2 contro-label">标题：</label>
+    	<input type="text" name="title" class="form-control" placeholder="title here, no more than 10 words.">
+    	<label for="title" class="col-sm-2 contro-label">正文：</label>
+    	<textarea name="post" rows="20" cols="90"></textarea><br />
+
+    	<div class="form-group">
+    		<div class="col-sm-8">
+    			<button class="btn btn-lg btn-warning" type="submit">发表</button>
+    		</div>
+    	</div>
+
+    </form>
+<%- include footer %>

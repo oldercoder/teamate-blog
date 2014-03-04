@@ -5,7 +5,7 @@ function Post(name, title, post){
     this.title = title;
     this.post = post;
 }
-module.exports = User;
+module.exports = Post;
 
 Post.prototype.save = function save(callback){
     var date = new Date();

@@ -5,8 +5,8 @@
  * Time: 15:31
  */
 
-var crypto = require ('crypto'),
-    User = require('../models/user.js');
+var crypto = require ('crypto');
+var User = require('../models/user.js');
 
 module.exports = function (app) {
 

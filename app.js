@@ -29,7 +29,8 @@ app.use(express.session({
     key: settings.db,
     cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
     store: new MongoStore({
-        db: settings.db
+        //db: settings.db
+        url: 'mongodb://7a07ef7c-9678-481a-85bc-b51c4439555a:d7287302-fc7e-45c3-9947-0d2639c916f0@10.0.116.152:10188/db/sessions'
     })
 }));
 app.use(app.router);

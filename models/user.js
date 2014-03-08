@@ -1,4 +1,6 @@
 var mongodb = require('./db');
+var database = require('mongodb');
+var dburl = mongodb.blue.url;
 
 function User(user){
     this.name = user.name;
@@ -18,19 +20,24 @@ User.prototype.save = function save(callback){
     };
 
     // Open database
-    mongodb.open(function(err, db){
+    //mongodb.open(function(err, db){
+    //database.connect(mongodb.local.url, function(err, db){
+    database.connect(dburl, function(err, db){
         if(err){
             return callback(err);
         }
         //read users collection
         db.collection('users', function(err, collection){
             if(err){
-                mongodb.close();
+                db.close();
                 return callback(err);
             }
-            collection.ensureIndex('name', {unique: true}); // 加索引
+            collection.ensureIndex('name', {unique: true}, function(err){
+                db.close();
+                return callback(err);
+            }); // 加索引
             collection.insert(user, {safe:true}, function(err, user){
-                mongodb.close();
+                db.close();
                 callback(err, user);
             });
         });
@@ -40,18 +47,20 @@ User.prototype.save = function save(callback){
 
 // 读用户信息
 User.get = function get(username, callback){
-    mongodb.open(function(err, db){
+    //mongodb.open(function(err, db){
+    //database.connect(mongodb.local.url, function(err, db){
+    database.connect(dburl, function(err, db){
         if(err){
             return callback(err);
         }
 
         db.collection('users', function(err, collection){
             if(err){
-                mongodb.close();
+                db.close();
                 return callback(err);
             }
             collection.findOne({name: username}, function(err, doc){
-                mongodb.close();
+                db.close();
                 if(doc){
                     var user = new User(doc);
                     callback(err, user);

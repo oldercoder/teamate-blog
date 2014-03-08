@@ -1,4 +1,6 @@
 var mongodb = require('./db');
+var database = require('mongodb');
+var dburl = mongodb.blue.url;
 
 function Post(name, title, post){
     this.name = name;
@@ -26,20 +28,25 @@ Post.prototype.save = function save(callback){
     };
 
     // open database
-    mongodb.open(function(err, db){
+   // mongodb.open(function(err, db){
+    //database.connect(mongodb.local.url, function(err, db){
+    database.connect(dburl, function(err, db){
         if(err){
             return callback(err)
         }
         //read posts collection
         db.collection('posts', function (err, collection){
             if(err){
-                mongodb.close();
+                db.close();
                 return callback(err);
             }
             //insert doc into collection
-            collection.ensureIndex('user');
+            collection.ensureIndex('user', function(err){
+                db.close();
+                return callback(err);
+            });
             collection.insert(post, {safe:true}, function(err, post){
-                mongodb.close();
+                db.close();
                 callback(err, post);
            });
         });
@@ -47,14 +54,18 @@ Post.prototype.save = function save(callback){
 };
 
 Post.get = function get(username, callback){
-    mongodb.open(function(err, db){
+
+    //mongodb.open(function(err, db){
+    //database.connect(mongodb.local.url, function(err, db){
+    database.connect(dburl, function(err, db){
         if(err){
             return callback(err)
         }
+
         //read collection
         db.collection('posts', function(err, collection){
             if(err){
-                mongodb.close();
+                db.close();
                 return callback(err);
             }
             //query doc with 'user=username', if null means all
@@ -63,7 +74,7 @@ Post.get = function get(username, callback){
                 query.user = username;
             }
             collection.find(query).sort({time: -1}).toArray(function (err, docs){
-                mongodb.close();
+                db.close();
                 if(err){
                     return callback(err, null);
                 }

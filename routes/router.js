@@ -35,7 +35,7 @@ module.exports = function (app) {
     app.post('/reg', checkNotLogin);
     app.post('/reg', function (req, res){
 
-        var password = req.body['password'];
+        var password = req.body.password;
         var password_re = req.body['password-repeat'];
         if(password_re != password){
             req.flash('error', '两次输入的密码不一致！');

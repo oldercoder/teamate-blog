@@ -1,6 +1,7 @@
 var mongodb = require('./db');
 var database = require('mongodb');
 var dburl = mongodb.blue.url;
+//var dburl = mongodb.local.url;
 
 function User(user){
     this.name = user.name;

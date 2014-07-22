@@ -14,7 +14,7 @@ var MongoStore = require('connect-mongo')(express);
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 1337);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(flash());
@@ -30,7 +30,7 @@ app.use(express.session({
     cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
     store: new MongoStore({
         //db: settings.db
-        url: 'mongodb://7a07ef7c-9678-481a-85bc-b51c4439555a:d7287302-fc7e-45c3-9947-0d2639c916f0@10.0.116.152:10188/db/sessions'
+        url: 'mongodb://3ee1c0e5-d050-4542-847d-a67135649ef5:fee6a703-78a1-4a34-b8a8-423dc11639cf@75.126.172.194:10154/db/sessions'
     })
 }));
 app.use(app.router);
